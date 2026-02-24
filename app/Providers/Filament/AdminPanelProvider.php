@@ -10,6 +10,7 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Width;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -30,13 +31,16 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->colors([
                 'primary' => Color::Amber,
-            ])
+            ])->spa()
             ->plugins([
                 FacehashPlugin::make()->size(10)
                     ->variant(Variant::Solid)
-                    ->initial(true)
-                   
-            ])
+                    ->initial(true)   
+            ])->unsavedChangesAlerts()
+            ->sidebarWidth('15rem')
+            ->sidebarCollapsibleOnDesktop()
+            ->errorNotifications(false)
+            ->maxContentWidth(Width::Full)
             ->login()
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')

@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -17,21 +18,24 @@ class UsersTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                return $query->where('role', '!=', UserRole::ADMIN->value);
+            })
             ->columns([
                 ImageColumn::make('facehash_avatar_url')
                     ->label('')
                     ->size(25),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()->weight(FontWeight::Bold),
                 TextColumn::make('email')
                     ->label('Email address')
+                    ->icon('heroicon-m-envelope')
                     ->searchable(),
                 TextColumn::make('phone_number')
+                    ->icon('heroicon-m-phone')
                     ->searchable()->placeholder('-'),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-
+                TextColumn::make('menus_count')->counts('menus')
+                    ->label('Menu')->badge()->sortable(),
                 TextColumn::make('role')->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -41,7 +45,9 @@ class UsersTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->striped()
+            ->description('Users with admin role are not displayed here.')
+
             ->filters([
                 //
             ])
