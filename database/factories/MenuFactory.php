@@ -17,7 +17,13 @@ class MenuFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
+            'description' => fake()->sentence(),
+            'slug' => "abc"
         ];
+    }
+
+    public function hasCategory(){
+        
     }
 }
