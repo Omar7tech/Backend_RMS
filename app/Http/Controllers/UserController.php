@@ -8,6 +8,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        
+        return $this->respondWithSuccess(['message' => 'User index']);
     }
 }

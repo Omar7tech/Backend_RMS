@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\User;
 use Database\Factories\MenuFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder

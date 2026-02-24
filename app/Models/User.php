@@ -4,15 +4,18 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Saade\FilamentFacehash\Concerns\HasFacehashAvatar;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable , HasUuids;
+    use HasFacehashAvatar;
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Menu::class);
     }
 
+    public function facehashAvatarName(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->name  // use email instead of name
+        );
+    }
    
 }
