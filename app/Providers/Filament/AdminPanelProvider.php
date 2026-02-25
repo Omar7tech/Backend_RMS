@@ -30,12 +30,15 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Violet,
             ])->spa()
+            ->brandLogo(asset('logos/logo-on-light.png'))
+            ->darkModeBrandLogo(asset('logos/logo-on-dark.png'))
+            ->brandLogoHeight('2.5rem')
             ->plugins([
                 FacehashPlugin::make()->size(10)
                     ->variant(Variant::Solid)
-                    ->initial(true)   
+                    ->initial(true)
             ])->unsavedChangesAlerts()
             ->sidebarWidth('15rem')
             ->sidebarCollapsibleOnDesktop()

@@ -46,6 +46,7 @@ class UsersTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->striped()
+            ->defaultSort('created_at', 'desc')
             ->description('Users with admin role are not displayed here.')
 
             ->filters([
