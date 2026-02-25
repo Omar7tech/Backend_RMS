@@ -19,8 +19,10 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin;
 use Saade\Facehash\Enums\Variant;
 use Saade\FilamentFacehash\FacehashPlugin;
+use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +41,12 @@ class AdminPanelProvider extends PanelProvider
                 FacehashPlugin::make()->size(10)
                     ->variant(Variant::Solid)
                     ->initial(true)
+                ,
+                FilamentSpatieLaravelHealthPlugin::make(),
+                EnvironmentIndicatorPlugin::make()->color(fn() => match (app()->environment()) {
+                    'production' => Color::Green,
+                    'local' => Color::Red,
+                })->showBorder(false)
             ])->unsavedChangesAlerts()
             ->sidebarWidth('15rem')
             ->sidebarCollapsibleOnDesktop()
